@@ -1,0 +1,57 @@
+04/06/18 16:08
+
+Problem 1 (5 points):
+NotImplementedError: Problem 1 Incomplete
+
+Problem 2 (5 points):
+NotImplementedError: Problem 2 Incomplete
+
+Problem 3 (5 points):
+NotImplementedError: Problems 3-5 Incomplete
+
+Problem 4 (10 points):
+NotImplementedError: Problems 3-5 Incomplete
+
+Problem 5 (10 points):
+NotImplementedError: Problems 3-5 Incomplete
+
+Problem 6 (10 points):
+NotImplementedError: Problem 6 Incomplete
+
+Code Quality (5 points):
+Code can be improved for find_policy()
+Score += 0
+
+Total score: 0/50 = 0.0%
+
+-------------------------------------------------------------------------------
+
+04/14/18 12:31
+
+Problem 1 (5 points):
+Failed to raise a ValueError
+Score += 0
+
+Problem 2 (5 points):
+Score += 5
+
+Problem 3 (5 points):
+Score += 5
+
+Problem 4 (10 points):
+Score += 10
+
+Problem 5 (10 points):
+Score += 10
+
+Problem 6 (10 points):
+Score += 10
+
+Code Quality (5 points):
+No comments.
+Score += 4
+
+Total score: 44/50 = 88.0%
+
+-------------------------------------------------------------------------------
+
