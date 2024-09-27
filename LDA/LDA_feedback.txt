@@ -1,0 +1,40 @@
+02/26/19 13:55
+
+Problem 1 (10 points):
+Score += 10
+
+Problem 2 (5 points):
+Score += 5
+
+Problems 3-6 (20 points):
+Score += 20
+
+Problem 7 (5 points):
+Score += 5
+
+Total score: 40/40 = 100.0%
+
+Excellent!
+
+-------------------------------------------------------------------------------
+
+04/19/19 17:30
+
+Problem 1 (10 points):
+Score += 10
+
+Problem 2 (5 points):
+Score += 5
+
+Problems 3-6 (20 points):
+Score += 20
+
+Problem 7 (5 points):
+Score += 5
+
+Total score: 40/40 = 100.0%
+
+Excellent!
+
+-------------------------------------------------------------------------------
+

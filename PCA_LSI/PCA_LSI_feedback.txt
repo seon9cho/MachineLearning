@@ -1,0 +1,41 @@
+02/04/19 12:48
+
+Problem 1 (10 points):
+Score += 10
+
+Problem 2 (20 points):
+Score += 20
+
+Problem 3 (15 points):
+Score += 15
+
+Code Quality (5 points):
+Comments?
+Score += 4
+
+Total score: 49/50 = 98.0%
+
+Excellent!
+
+-------------------------------------------------------------------------------
+
+02/04/19 14:17
+
+Problem 1 (10 points):
+Score += 10
+
+Problem 2 (20 points):
+Score += 20
+
+Problem 3 (15 points):
+Score += 15
+
+Code Quality (5 points):
+Score += 5
+
+Total score: 50/50 = 100.0%
+
+Excellent!
+
+-------------------------------------------------------------------------------
+
