@@ -10,7 +10,7 @@ import numpy as np
 
 from sklearn.base import BaseEstimator
 from sklearn.utils import check_random_state
-from sklearn.utils.extmath import logsumexp
+from scipy.special import logsumexp  # [compat] sklearn.utils.extmath.logsumexp was removed from scikit-learn; SciPy's is the same function
 from sklearn import cluster
 
 
@@ -523,12 +523,12 @@ class GMM(BaseEstimator):
     def _do_mstep(self, X, posteriors, params, min_covar=0):
             w = posteriors.sum(axis=0)
             avg_obs = np.dot(posteriors.T, X)
-            norm = 1.0 / (w[:, np.newaxis] + 10 * np.finfo(np.float).eps)
+            norm = 1.0 / (w[:, np.newaxis] + 10 * np.finfo(float).eps)  # [compat] np.float was removed in NumPy 1.24
 
             if 'w' in params:
                 self._log_weights = np.log(w /
-                        (w.sum() + 10 * np.finfo(np.float).eps)
-                        + np.finfo(np.float).eps)
+                        (w.sum() + 10 * np.finfo(float).eps)  # [compat] np.float was removed in NumPy 1.24
+                        + np.finfo(float).eps)  # [compat] np.float was removed in NumPy 1.24
             if 'm' in params:
                 self._means = avg_obs * norm
             if 'c' in params:
@@ -681,7 +681,7 @@ def _covar_mstep_full(gmm, obs, posteriors, avg_obs, norm, min_covar):
     for c in range(gmm.n_components):
         post = posteriors[:, c]
         avg_cv = np.dot(post * obs.T, obs) / (post.sum() +
-                                10 * np.finfo(np.float).eps)
+                                10 * np.finfo(float).eps)  # [compat] np.float was removed in NumPy 1.24
         mu = gmm._means[c][np.newaxis]
         cv[c] = (avg_cv - np.dot(mu.T, mu)
                  + min_covar * np.eye(gmm.n_features))

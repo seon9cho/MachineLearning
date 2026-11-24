@@ -116,7 +116,7 @@ class _BaseHMM(BaseEstimator):
             transmat_prior = 1.0
         self.transmat_prior = transmat_prior
 
-    def eval(self, obs, maxrank=None, beamlogprob=-np.Inf):
+    def eval(self, obs, maxrank=None, beamlogprob=-np.inf):  # [compat] np.Inf was removed in NumPy 2.0
         """Compute the log probability under the model and compute posteriors
 
         Implements rank and beam pruning in the forward-backward
@@ -166,7 +166,7 @@ class _BaseHMM(BaseEstimator):
         posteriors /= np.sum(posteriors, axis=1).reshape((-1,1))
         return logprob, posteriors
 
-    def score(self, obs, maxrank=None, beamlogprob=-np.Inf):
+    def score(self, obs, maxrank=None, beamlogprob=-np.inf):  # [compat] np.Inf was removed in NumPy 2.0
         """Compute the log probability under the model.
 
         Parameters
@@ -200,7 +200,7 @@ class _BaseHMM(BaseEstimator):
                                                     beamlogprob)
         return logprob
 
-    def decode(self, obs, maxrank=None, beamlogprob=-np.Inf):
+    def decode(self, obs, maxrank=None, beamlogprob=-np.inf):  # [compat] np.Inf was removed in NumPy 2.0
         """Find most likely state sequence corresponding to `obs`.
 
         Uses the Viterbi algorithm.
@@ -319,7 +319,7 @@ class _BaseHMM(BaseEstimator):
 
     def fit(self, obs, n_iter=100, thresh=1e-1, params=string.ascii_letters,
             init_params=string.ascii_letters,
-            maxrank=None, beamlogprob=-np.Inf, **kwargs):
+            maxrank=None, beamlogprob=-np.inf, **kwargs):  # [compat] np.Inf was removed in NumPy 2.0
         """Estimate model parameters.
 
         An initialization step is performed before entering the EM
@@ -426,17 +426,17 @@ class _BaseHMM(BaseEstimator):
         if not np.all(np.allclose(np.sum(transmat, axis=1), 1.0)):
             raise ValueError('Rows of transmat must sum to 1.0')
 
-        self._log_transmat = np.log(np.asanyarray(transmat).copy() + np.finfo(np.float).eps)
+        self._log_transmat = np.log(np.asanyarray(transmat).copy() + np.finfo(float).eps)  # [compat] np.float was removed in NumPy 1.24
         underflow_idx = np.isnan(self._log_transmat)
-        self._log_transmat[underflow_idx] = -np.Inf
+        self._log_transmat[underflow_idx] = -np.inf  # [compat] np.Inf was removed in NumPy 2.0
 
     transmat = property(_get_transmat, _set_transmat)
 
     def _do_viterbi_pass(self, framelogprob, maxrank=None,
-                         beamlogprob=-np.Inf):
+                         beamlogprob=-np.inf):  # [compat] np.Inf was removed in NumPy 2.0
         nobs = len(framelogprob)
         lattice = np.zeros((nobs, self.n_components))
-        traceback = np.zeros((nobs, self.n_components), dtype=np.int)
+        traceback = np.zeros((nobs, self.n_components), dtype=int)  # [compat] np.int was removed in NumPy 1.24
 
         lattice[0] = self._log_startprob + framelogprob[0]
         for n in range(1, nobs):
@@ -444,7 +444,7 @@ class _BaseHMM(BaseEstimator):
             pr = self._log_transmat[idx].T + lattice[n - 1, idx]
             lattice[n] = np.max(pr, axis=1) + framelogprob[n]
             traceback[n] = np.argmax(pr, axis=1)
-        lattice[lattice <= ZEROLOGPROB] = -np.Inf
+        lattice[lattice <= ZEROLOGPROB] = -np.inf  # [compat] np.Inf was removed in NumPy 2.0
 
         # Do traceback.
         reverse_state_sequence = []
@@ -458,7 +458,7 @@ class _BaseHMM(BaseEstimator):
         return logprob, np.array(reverse_state_sequence)
 
     def _do_forward_pass(self, framelogprob, maxrank=None,
-                         beamlogprob=-np.Inf):
+                         beamlogprob=-np.inf):  # [compat] np.Inf was removed in NumPy 2.0
         nobs = len(framelogprob)
         fwdlattice = np.zeros((nobs, self.n_components))
 
@@ -468,12 +468,12 @@ class _BaseHMM(BaseEstimator):
             fwdlattice[n] = (logsum(self._log_transmat[idx].T
                                     + fwdlattice[n - 1, idx], axis=1)
                              + framelogprob[n])
-        fwdlattice[fwdlattice <= ZEROLOGPROB] = -np.Inf
+        fwdlattice[fwdlattice <= ZEROLOGPROB] = -np.inf  # [compat] np.Inf was removed in NumPy 2.0
 
         return logsum(fwdlattice[-1]), fwdlattice
 
     def _do_backward_pass(self, framelogprob, fwdlattice, maxrank=None,
-                          beamlogprob=-np.Inf):
+                          beamlogprob=-np.inf):  # [compat] np.Inf was removed in NumPy 2.0
         nobs = len(framelogprob)
         bwdlattice = np.zeros((nobs, self.n_components))
 
@@ -490,7 +490,7 @@ class _BaseHMM(BaseEstimator):
                                        bwdlattice[n, idx] +
                                        framelogprob[n, idx],
                                        axis=1)
-        bwdlattice[bwdlattice <= ZEROLOGPROB] = -np.Inf
+        bwdlattice[bwdlattice <= ZEROLOGPROB] = -np.inf  # [compat] np.Inf was removed in NumPy 2.0
 
         return bwdlattice
 
@@ -905,7 +905,7 @@ class MultinomialHMM(_BaseHMM):
 
         self._log_emissionprob = np.log(emissionprob)
         underflow_idx = np.isnan(self._log_emissionprob)
-        self._log_emissionprob[underflow_idx] = -np.Inf
+        self._log_emissionprob[underflow_idx] = -np.inf  # [compat] np.Inf was removed in NumPy 2.0
         self.n_symbols = self._log_emissionprob.shape[1]
 
     emissionprob = property(_get_emissionprob, _set_emissionprob)
@@ -1075,9 +1075,9 @@ class GMMHMM(_BaseHMM):
             params)
 
         for state, g in enumerate(self.gmms):
-            lgmm_posteriors = np.log(g.eval(obs)[1] + np.finfo(np.float).eps)
+            lgmm_posteriors = np.log(g.eval(obs)[1] + np.finfo(float).eps)  # [compat] np.float was removed in NumPy 1.24
             lgmm_posteriors += np.log(posteriors[:, state][:, np.newaxis]
-                                      + np.finfo(np.float).eps)
+                                      + np.finfo(float).eps)  # [compat] np.float was removed in NumPy 1.24
             gmm_posteriors = np.exp(lgmm_posteriors)
             tmp_gmm = GMM(g.n_components, cvtype=g.cvtype)
             tmp_gmm.n_features = g.n_features

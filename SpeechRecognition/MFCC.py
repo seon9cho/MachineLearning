@@ -25,7 +25,7 @@ def melfb(p, n, fs):
     b1 = int(floor(bl[0])) + 1
     b2 = int(ceil(bl[1]))
     b3 = int(floor(bl[2]))
-    b4 = min(fn2, int(ceil(bl[3]))) - 1
+    b4 = min([fn2, int(ceil(bl[3]))]) - 1  # [compat] NumPy 2's 'from numpy import *' now brings in np.min, which reads a 2nd argument as an axis; pass a list
     pf = log(1 + arange(b1,b4+1) / f0 / n) / lr
     fp = floor(pf)
     pm = pf - fp
